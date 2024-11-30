@@ -8,7 +8,7 @@ A API foi projetada para ser escalável, utilizando os serviços gerenciados da 
 
 ## Solução
 
-Nosso projeto é uma API de carrinho de compras que permite realizar as seguintes operações:
+Como solução foi desenvolvido este projeto, uma API de carrinho de compras que permite realizar as seguintes operações:
 
 - **Adicionar item ao carrinho**: Adiciona um item ao carrinho com informações como produto, quantidade e preço.
 - **Listar itens do carrinho**: Recupera todos os itens presentes no carrinho de compras.
