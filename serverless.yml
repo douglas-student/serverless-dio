@@ -1,0 +1,67 @@
+service: carrinho-de-compras
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: '20201221'
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - arn:aws:dynamodb:us-east-1:123456789012:table/CartTable
+
+functions:
+  addItem:
+    handler: src/addItem.handler
+    events:
+      - http:
+          path: /cart
+          method: post
+  getCart:
+    handler: src/getCart.handler
+    events:
+      - http:
+          path: /cart
+          method: get
+  getItem:
+    handler: src/getItem.handler
+    events:
+      - http:
+          path: /cart/{id}
+          method: get
+  updateItem:
+    handler: src/updateItem.handler
+    events:
+      - http:
+          path: /cart/{id}
+          method: put
+  removeItem:
+    handler: src/removeItem.handler
+    events:
+      - http:
+          path: /cart/{id}
+          method: delete
+
+resources:
+  Resources:
+    CartTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CartTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
